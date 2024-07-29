@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+option go_package = "d-alejandro/grpc/pkg/proto/service/order/v1;order_v1";
+
+package pkg.proto.service.order.v1;
+
+service Order {
+  rpc GetOrder (OrderRequest) returns (OrderResponse);
+}
+
+message OrderRequest {
+  int64 order_id = 1;
+}
+
+message OrderResponse {
+  int64 order_id = 1;
+  string user_name = 2;
+  string email = 3;
+}
