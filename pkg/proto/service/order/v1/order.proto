@@ -4,8 +4,9 @@ option go_package = "d-alejandro/grpc/pkg/proto/service/order/v1;order_v1";
 
 package pkg.proto.service.order.v1;
 
-service Order {
+service OrderService {
   rpc GetOrder (OrderRequest) returns (OrderResponse);
+  rpc GetOrders (Empty) returns (OrdersResponse);
 }
 
 message OrderRequest {
@@ -13,7 +14,17 @@ message OrderRequest {
 }
 
 message OrderResponse {
+  Order order = 1;
+}
+
+message Order {
   int64 order_id = 1;
   string user_name = 2;
   string email = 3;
+}
+
+message Empty {}
+
+message OrdersResponse {
+  repeated Order orders = 1;
 }
