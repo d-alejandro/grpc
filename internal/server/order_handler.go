@@ -1,12 +1,14 @@
 package server
 
 import (
+	"cmp"
 	"context"
 	"d-alejandro/grpc/internal/resources"
 	orderService "d-alejandro/grpc/pkg/proto_gen/go/service/order/v1"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
+	"slices"
 )
 
 type orderHandler struct {
@@ -57,6 +59,10 @@ func (receiver *orderHandler) GetOrders(
 	for _, order := range receiver.orders {
 		orders = append(orders, order)
 	}
+
+	slices.SortStableFunc(orders, func(a, b *orderService.Order) int {
+		return -1 * cmp.Compare(a.GetOrderId(), b.GetOrderId())
+	})
 
 	ordersResponse := &orderService.OrdersResponse{
 		Orders: orders,
